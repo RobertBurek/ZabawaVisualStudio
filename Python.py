@@ -12,14 +12,14 @@ klient2={'imieNazwisko':'Roman Nijaki','idKlienta':26255}
 towar1 = {'nazwa': 'koszula','cena':55.55}
 transakcja1 = {'id':1, 'klient':'Robert Nowak', 'towary':['koszulka','spodnie'], 'ceny': [25.50, 100.00]}
 
-def dodajKlienta(bazaK, klient):
+def dodajK(bazaK, klient):
     if klient in bazaK:
         print('Klient: '+klient['imieNazwisko'] + ' ' + klient['idKlienta']+' już istnieje')
     else:
         bazaK.append(klient)
 
-dodajKlienta(bazaKlienci, klient1)
-dodajKlienta(bazaKlienci, klient2)
+dodajK(bazaKlienci, klient1)
+dodajK(bazaKlienci, klient2)
 
 def dodajT(bazaT, bazaM, towar, ile):
     if towar in bazaT:
@@ -47,6 +47,11 @@ def dodajTowar():
     cena = float(input('Cena towaru: '))
     ile = int(input('Ilość w magazynie: '))
     dodajT(bazaTowary, bazaMagazyn, {'nazwa': nazwa, 'cena': cena}, ile)
+
+def dodajKlienta():
+    imieNazwisko = str(input('Imie i nazwisko klienta: '))
+    idKlienta = int(input('Ilość w magazynie: '))
+    dodajK(bazaKlienci,{'imieNazwisko': imieNazwisko, 'idKlienta': idKlienta})
 
 def raporty():
     print(bazaKlienci)
@@ -79,7 +84,7 @@ while tak == True :
     wybor = int(input('Twój wybór: '))
     if wybor==11: dodajTowar()
     if wybor==12: dodajTowar()
-    if wybor==21: dodajKlienta
+    if wybor==21: dodajKlienta()
     if wybor==9: raporty()
     if wybor==1: raportBaza(bazaTowary)
     if wybor==2: raportBaza(bazaKlienci)
