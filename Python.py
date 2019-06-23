@@ -10,7 +10,7 @@ klient2={'imieNazwisko':'Roman Nijaki','idKlienta':26255}
 
 
 towar1 = {'nazwa': 'koszula','cena':55.55}
-transakcja1 = {'id':1, 'klient':'Robert Nowak', 'towary':['koszulka','spodnie'], 'ceny': [25.50,100.00]}
+transakcja1 = {'id':1, 'klient':'Robert Nowak', 'towary':['koszulka','spodnie'], 'ceny': [25.50, 100.00]}
 
 def dodajKlienta(bazaK, klient):
     if klient in bazaK:
@@ -32,7 +32,6 @@ dodajT(bazaTowary, bazaMagazyn, {'nazwa':'koszula', 'cena': 45.50}, 113)
 dodajT(bazaTowary, bazaMagazyn, {'nazwa':'spodenki', 'cena': 55.55}, 13)
 dodajT(bazaTowary, bazaMagazyn, {'nazwa':'skarpetyMeskie40', 'cena': 8.35}, 25)
 dodajT(bazaTowary, bazaMagazyn, {'nazwa':'skarpetyDamski35', 'cena': 7.55}, 33)
-
 
 
 
