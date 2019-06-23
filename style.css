@@ -1,0 +1,17 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    background: #333333;
+    text-align: center;
+}
+
+img{
+    display: none;
+}
+
+.visible{
+    display: inline-block;
+}
