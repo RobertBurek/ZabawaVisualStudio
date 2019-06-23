@@ -57,9 +57,9 @@ def raporty():
 def raportBaza(baza):
     print(baza)
 
-
+tak=True
 subprocess.call("cls", shell = True)
-while True:
+while tak == True :
     print(' MENU: ')
     print('1 - Towary')
     print('   11 - dodaj towar')
@@ -70,6 +70,7 @@ while True:
     print('   22 - usuń klienta')
     print('   23 - modyfikuj klienta')
     print('9 - Raporty')
+    print('0 - Koniec')
  #   print('   91 - lista towarów')
  #   print('   92 - lista klientów')
  #   print('   93 - lista transakcji')
@@ -79,7 +80,8 @@ while True:
     if wybor==11: dodajTowar()
     if wybor==12: dodajTowar()
     if wybor==21: dodajKlienta
-    if wybor==9: raporty
+    if wybor==9: raporty()
     if wybor==1: raportBaza(bazaTowary)
     if wybor==2: raportBaza(bazaKlienci)
     if wybor==3: raportBaza(bazaMagazyn)
+    if wybor==0: tak=False
