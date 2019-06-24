@@ -3,9 +3,9 @@ import subprocess
 bazaTowary=[]
 bazaMagazyn = [] 
 bazaKlienci = []
-bazTransakcje = []
+bazaTransakcji = []
 
-transakcja1 = {'id':1, 'klient':'Robert Nowak', 'towary':['koszulka','spodnie'], 'ceny': [25.50, 100.00]}
+transakcja1 = {'id':1, 'idKlienta': 25100, 'data': '19-06-2019', 'towar':'koszulka', 'ceny': 25.5, 'status': 'zrealizowane'}
 
 def dodajK(bazaK, klient):
     if klient in bazaK:
@@ -13,9 +13,9 @@ def dodajK(bazaK, klient):
     else:
         bazaK.append(klient)
 
-dodajK(bazaKlienci, {'imieNazwisko':'Robert Makowaki','idKlienta':25111})
-dodajK(bazaKlienci, {'imieNazwisko':'Roman Nijaki','idKlienta':26255})
-dodajK(bazaKlienci, {'imieNazwisko':'Anna Nowakowska','idKlienta':25100})
+dodajK(bazaKlienci, {'imieNazwisko':'Robert Makowaki','idKlienta': 25111})
+dodajK(bazaKlienci, {'imieNazwisko':'Roman Nijaki','idKlienta': 26255})
+dodajK(bazaKlienci, {'imieNazwisko':'Anna Nowakowska','idKlienta': 25100})
 
 def dodajT(bazaT, bazaM, towar, ile):
     if towar in bazaT:
@@ -72,7 +72,7 @@ def usunKlienta():
     szukanyKlient = {'imieNazwisko': imieNazwisko, 'idKlienta': id}
     if szukanyKlient in bazaKlienci:
         bazaKlienci.remove(szukanyKlient)
-        print('Usunięto klienta: '+szukanyKlient['imieNazwisko']+' (id='+szukanyKlient['idKlienta']+')')
+        print('Usunięto klienta: '+szukanyKlient['imieNazwisko']+' (id='+str(szukanyKlient['idKlienta'])+')')
     else:
         print('Nie usunięto, w bazie nie ma takiego klienta.')
     for klient in bazaKlienci:
@@ -93,7 +93,7 @@ def modyfikujKlienta():
     if szukanyKlient in bazaKlienci:
         index = bazaKlienci.index(szukanyKlient)
         bazaKlienci[index]['imieNazwisko'] = noweImieNazwisko
-        print('Zmodyfikowano dane klienta: '+noweImieNazwisko+' (id='+str(szukanyKlient['idKlienta'])+')')
+        print('Zmodyfikowano dane klienta: ' + noweImieNazwisko + ' (id='+str(szukanyKlient['idKlienta'])+')')
     else:
         print('Nie zmodyfikowano, w bazie nie ma takiego klienta.')
         for klient in bazaKlienci:
@@ -106,6 +106,41 @@ def modyfikujKlienta():
                     bazaKlienci[index]['imieNazwisko'] = noweImieNazwisko
                     print('Zmodyfikowano dane klienta: '+noweImieNazwisko+' (id='+str(szukanyKlient['idKlienta'])+')')
 
+#  MAGAZYN
+def dodajDoMagazynu():
+    nazwa = str(input('Nazwa towaru: '))
+    cena = float(input('Cena towaru: '))
+    ile = int(input('Ile dodać do magazynu: '))
+    szukanyTowar = {'nazwa': nazwa, 'cena': cena}
+    if szukanyTowar in bazaTowary:
+        index = bazaTowary.index(szukanyTowar)
+        if ile>=0:
+            bazaMagazyn[index]['ilosc'] += ile
+            print('Stan magazynowy po zmianie: '+str(bazaMagazyn[index]['ilosc'])+'  - towar: '+szukanyTowar['nazwa'])
+    else:
+        print('Nie ma takiego towaru w magazynie.')
+
+def usunZMagazynu():
+    nazwa = str(input('Nazwa towaru: '))
+    cena = float(input('Cena towaru: '))
+    ile = int(input('Ile usunąć z magazynu: '))
+    szukanyTowar = {'nazwa': nazwa, 'cena': cena}
+    if szukanyTowar in bazaTowary:
+        index = bazaTowary.index(szukanyTowar)
+        if ile>=0 and bazaMagazyn[index]['ilosc']>=ile:
+            bazaMagazyn[index]['ilosc'] -= ile
+            print('Stan magazynowy po zmianie: '+str(bazaMagazyn[index]['ilosc'])+'  - towar: '+szukanyTowar['nazwa'])
+        else:
+            if bazaMagazyn[index]['ilosc'] < ile:
+                print('Nie ma tyle w magazynie.')
+                takNie = str(input('Czy mam wyzerować stan magazynowy Y/N: '))
+                if takNie=='Y' or takNie=='y':
+                    bazaMagazyn[index]['ilosc'] = 0
+                    print('Stan magazynowy po zmianie: '+str(bazaMagazyn[index]['ilosc'])+'  - towar: '+szukanyTowar['nazwa'])
+    else:
+        print('Nie ma takiego towaru w magazynie.')
+
+
 def wypiszBaze(baza):
     print('-----------------------------------------------')
     for i in range(len(baza)):
@@ -116,7 +151,7 @@ def raporty():
     wypiszBaze(bazaKlienci)
     wypiszBaze(bazaTowary)
     wypiszBaze(bazaMagazyn)
-    wypiszBaze(bazTransakcje)
+    wypiszBaze(bazaTransakcji)
 
 def raportBaza(baza):
     wypiszBaze(baza)
@@ -128,15 +163,16 @@ while tak == True :
     print('1 - Towary (lista)')
     print('   11 - dodaj towar')
     print('   12 - usuń towar')
-    print('   13 - modyfikuj towar')
     print('2 - Klienci (lista)')
     print('   21 - dodaj klienta')
     print('   22 - usuń klienta')
     print('   23 - modyfikuj klienta')
     print('3 - Magazyn (stan)')
-    print('   31 - dodaj klienta')
-    print('   32 - usuń klienta')
-    print('   23 - modyfikuj klienta')
+    print('   31 - dodaj do magazynu')
+    print('   32 - usuń z magazynu')
+    print('4 - Transakcje (lista)')
+    print('   41 - dodaj transakcje')
+    print('   42 - usuń transakcje')
     print('9 - Raporty')
     print('0 - Koniec')
     wybor = int(input('Twój wybór: '))
@@ -145,6 +181,8 @@ while tak == True :
     if wybor==21: dodajKlienta()
     if wybor==22: usunKlienta()
     if wybor==23: modyfikujKlienta()
+    if wybor==31: dodajDoMagazynu()
+    if wybor==32: usunZMagazynu()
     if wybor==9: raporty()
     if wybor==1: raportBaza(bazaTowary)
     if wybor==2: raportBaza(bazaKlienci)
