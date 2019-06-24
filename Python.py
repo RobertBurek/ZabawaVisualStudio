@@ -71,6 +71,29 @@ def usunKlienta():
                 bazaKlienci.remove(klient)
                 print('Usunięto klienta z bazy.')
 
+def modyfikujKlienta():
+    imieNazwisko = str(input('Podaj imie i nazwisko: '))
+    id = int(input('Podaj id klienta: '))
+    szukanyKlient = {'imieNazwisko': imieNazwisko, 'idKlienta': id}
+    print('Id klienta zostaje bez zmian.')
+    noweImieNazwisko = str(input('Podaj NOWE imie i nazwisko: '))
+    if szukanyKlient in bazaKlienci:
+    #    print('Id klienta zostaje bez zmian.')
+     #   noweImieNazwisko = str(input('Podaj NOWE imie i nazwisko: '))
+        index = bazaKlienci.index(szukanyKlient)
+        bazaKlienci[index]['imieNazwisko'] = noweImieNazwisko
+        print('Zmodyfikowano dane klienta: '+noweImieNazwisko+' (id='+str(szukanyKlient['idKlienta'])+')')
+    else:
+        print('Nie zmodyfikowano, w bazie nie ma takiego klienta.')
+        for klient in bazaKlienci:
+            if klient['idKlienta'] == id:
+                print('W bazie istnije klient o id= '+str(id))
+                print('Jest to: '+klient['imieNazwisko'])
+                takNie = str(input('Czy temu klientowi zmodyfikować dane Y/N: '))
+                if takNie=='Y' or takNie=='y':
+                    index = bazaKlienci.index(klient)
+                    bazaKlienci[index]['imieNazwisko'] = noweImieNazwisko
+                    print('Zmodyfikowano dane klienta: '+noweImieNazwisko+' (id='+str(szukanyKlient['idKlienta'])+')')
 
 def raporty():
     print(bazaKlienci)
@@ -105,6 +128,7 @@ while tak == True :
     if wybor==12: dodajTowar()
     if wybor==21: dodajKlienta()
     if wybor==22: usunKlienta()
+    if wybor==23: modyfikujKlienta()
     if wybor==9: raporty()
     if wybor==1: raportBaza(bazaTowary)
     if wybor==2: raportBaza(bazaKlienci)
