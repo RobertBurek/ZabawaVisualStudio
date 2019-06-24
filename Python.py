@@ -1,15 +1,10 @@
 import subprocess
 
-bazaTowary=[{'nazwa': 'koszulka','cena':25.50},{'nazwa': 'spodnie','cena':100.00}]
-bazaMagazyn = [{'nazwa': 'koszulka_25.50','ilosc': 20},{'nazwa': 'spodnie_100.00','ilosc': 10}] 
+bazaTowary=[]
+bazaMagazyn = [] 
 bazaKlienci = []
 bazTransakcje = []
 
-klient1={'imieNazwisko':'Robert Makowaki','idKlienta':25111}
-klient2={'imieNazwisko':'Roman Nijaki','idKlienta':26255}
-
-
-towar1 = {'nazwa': 'koszula','cena':55.55}
 transakcja1 = {'id':1, 'klient':'Robert Nowak', 'towary':['koszulka','spodnie'], 'ceny': [25.50, 100.00]}
 
 def dodajK(bazaK, klient):
@@ -18,8 +13,9 @@ def dodajK(bazaK, klient):
     else:
         bazaK.append(klient)
 
-dodajK(bazaKlienci, klient1)
-dodajK(bazaKlienci, klient2)
+dodajK(bazaKlienci, {'imieNazwisko':'Robert Makowaki','idKlienta':25111})
+dodajK(bazaKlienci, {'imieNazwisko':'Roman Nijaki','idKlienta':26255})
+dodajK(bazaKlienci, {'imieNazwisko':'Anna Nowakowska','idKlienta':25100})
 
 def dodajT(bazaT, bazaM, towar, ile):
     if towar in bazaT:
@@ -28,26 +24,34 @@ def dodajT(bazaT, bazaM, towar, ile):
         bazaT.append(towar)
         bazaM.append({'nazwa': towar['nazwa']+'_'+str(towar['cena']), 'ilosc': ile})
 
+dodajT(bazaTowary, bazaMagazyn, {'nazwa': 'koszulka','cena': 25.50}, 22)
+dodajT(bazaTowary, bazaMagazyn, {'nazwa': 'spodnie','cena': 100.00}, 16)
 dodajT(bazaTowary, bazaMagazyn, {'nazwa':'koszula', 'cena': 45.50}, 113)
 dodajT(bazaTowary, bazaMagazyn, {'nazwa':'spodenki', 'cena': 55.55}, 13)
 dodajT(bazaTowary, bazaMagazyn, {'nazwa':'skarpetyMeskie40', 'cena': 8.35}, 25)
 dodajT(bazaTowary, bazaMagazyn, {'nazwa':'skarpetyDamski35', 'cena': 7.55}, 33)
 
 
-
-def pensjaZaMala(baza, minimum):
-    ponizejMinimum = []
-    for osoba in baza:
-        if osoba['pensja'] < minimum:
-            ponizejMinimum.append(osoba)
-    return ponizejMinimum
-
+#  TOWARY
 def dodajTowar():
     nazwa = str(input('Nazwa towaru: '))
     cena = float(input('Cena towaru: '))
     ile = int(input('Ilość w magazynie: '))
     dodajT(bazaTowary, bazaMagazyn, {'nazwa': nazwa, 'cena': cena}, ile)
 
+def usunTowar():
+    nazwa = str(input('Nazwa towaru: '))
+    cena = float(input('Cena towaru: '))
+    szukanyTowar = {'nazwa': nazwa, 'cena': cena}
+    if szukanyTowar in bazaTowary:
+        index = bazaTowary.index(szukanyTowar)
+        bazaTowary.remove(szukanyTowar)
+        print('Usunięto towar: '+szukanyTowar['nazwa'] + ' (cena=' + str(szukanyTowar['cena'])+')')
+        bazaMagazyn.remove(bazaMagazyn[index])
+    else:
+        print('Nie ma takiego towaru: '+szukanyTowar['nazwa'] + ' (cena=' + str(szukanyTowar['cena'])+')')
+
+#  KLIENCI
 def dodajKlienta():
     tak = True
     imieNazwisko = str(input('Imie i nazwisko klienta: '))
@@ -87,8 +91,6 @@ def modyfikujKlienta():
     print('Id klienta zostaje bez zmian.')
     noweImieNazwisko = str(input('Podaj NOWE imie i nazwisko: '))
     if szukanyKlient in bazaKlienci:
-    #    print('Id klienta zostaje bez zmian.')
-     #   noweImieNazwisko = str(input('Podaj NOWE imie i nazwisko: '))
         index = bazaKlienci.index(szukanyKlient)
         bazaKlienci[index]['imieNazwisko'] = noweImieNazwisko
         print('Zmodyfikowano dane klienta: '+noweImieNazwisko+' (id='+str(szukanyKlient['idKlienta'])+')')
@@ -104,37 +106,42 @@ def modyfikujKlienta():
                     bazaKlienci[index]['imieNazwisko'] = noweImieNazwisko
                     print('Zmodyfikowano dane klienta: '+noweImieNazwisko+' (id='+str(szukanyKlient['idKlienta'])+')')
 
+def wypiszBaze(baza):
+    print('-----------------------------------------------')
+    for i in range(len(baza)):
+        print(baza[i])
+    print('-----------------------------------------------')    
+
 def raporty():
-    print(bazaKlienci)
-    print(bazaTowary)
-    print(bazaMagazyn)
-    print(bazTransakcje)
+    wypiszBaze(bazaKlienci)
+    wypiszBaze(bazaTowary)
+    wypiszBaze(bazaMagazyn)
+    wypiszBaze(bazTransakcje)
 
 def raportBaza(baza):
-    print(baza)
+    wypiszBaze(baza)
 
 tak=True
 subprocess.call("cls", shell = True)
 while tak == True :
     print(' MENU: ')
-    print('1 - Towary')
+    print('1 - Towary (lista)')
     print('   11 - dodaj towar')
     print('   12 - usuń towar')
     print('   13 - modyfikuj towar')
-    print('2 - Klienci')
+    print('2 - Klienci (lista)')
     print('   21 - dodaj klienta')
     print('   22 - usuń klienta')
     print('   23 - modyfikuj klienta')
+    print('3 - Magazyn (stan)')
+    print('   31 - dodaj klienta')
+    print('   32 - usuń klienta')
+    print('   23 - modyfikuj klienta')
     print('9 - Raporty')
     print('0 - Koniec')
- #   print('   91 - lista towarów')
- #   print('   92 - lista klientów')
- #   print('   93 - lista transakcji')
- #   print('   94 - stan magazynu')
-
     wybor = int(input('Twój wybór: '))
     if wybor==11: dodajTowar()
-    if wybor==12: dodajTowar()
+    if wybor==12: usunTowar()
     if wybor==21: dodajKlienta()
     if wybor==22: usunKlienta()
     if wybor==23: modyfikujKlienta()
