@@ -49,8 +49,17 @@ def dodajTowar():
     dodajT(bazaTowary, bazaMagazyn, {'nazwa': nazwa, 'cena': cena}, ile)
 
 def dodajKlienta():
+    tak = True
     imieNazwisko = str(input('Imie i nazwisko klienta: '))
-    idKlienta = int(input('Ilość w magazynie: '))
+    while tak==True:
+        idKlienta = int(input('Unikalny numer id: '))
+        for klient in bazaKlienci:
+            if klient['idKlienta']!=idKlienta:
+                tak=False
+            else:
+                tak=True
+                print('Taki numer id istnieje !!!')
+                break
     dodajK(bazaKlienci,{'imieNazwisko': imieNazwisko, 'idKlienta': idKlienta})
 
 def usunKlienta():
