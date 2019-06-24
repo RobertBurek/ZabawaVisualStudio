@@ -53,6 +53,25 @@ def dodajKlienta():
     idKlienta = int(input('Ilość w magazynie: '))
     dodajK(bazaKlienci,{'imieNazwisko': imieNazwisko, 'idKlienta': idKlienta})
 
+def usunKlienta():
+    imieNazwisko = str(input('Podaj imie i nazwisko: '))
+    id = int(input('Podaj id klienta: '))
+    szukanyKlient = {'imieNazwisko': imieNazwisko, 'idKlienta': id}
+    if szukanyKlient in bazaKlienci:
+        bazaKlienci.remove(szukanyKlient)
+        print('Usunięto klienta: '+szukanyKlient['imieNazwisko']+' (id='+szukanyKlient['idKlienta']+')')
+    else:
+        print('Nie usunięto, w bazie nie ma takiego klienta.')
+    for klient in bazaKlienci:
+        if klient['idKlienta'] == id:
+            print('W bazie istnije klient o id= '+str(id))
+            print('Jest to: '+klient['imieNazwisko'])
+            takNie = str(input('Usunąć tego klienta Y/N: '))
+            if takNie=='Y' or takNie=='y':
+                bazaKlienci.remove(klient)
+                print('Usunięto klienta z bazy.')
+
+
 def raporty():
     print(bazaKlienci)
     print(bazaTowary)
@@ -85,6 +104,7 @@ while tak == True :
     if wybor==11: dodajTowar()
     if wybor==12: dodajTowar()
     if wybor==21: dodajKlienta()
+    if wybor==22: usunKlienta()
     if wybor==9: raporty()
     if wybor==1: raportBaza(bazaTowary)
     if wybor==2: raportBaza(bazaKlienci)
