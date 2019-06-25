@@ -7,6 +7,7 @@ bazaTransakcji = []
 
 
 # TWORZENIE PRZYKŁADOWYCH DANYCH W BAZACH
+
 def dodajTr(bazaTr, transakcja):
     if transakcja in bazaTr:
         print('Taka transakcja już istnieje')
@@ -135,6 +136,21 @@ def modyfikujKlienta():
                     bazaKlienci[index]['imieNazwisko'] = noweImieNazwisko
                     print('Zmodyfikowano dane klienta: '+noweImieNazwisko +
                           ' (id='+str(szukanyKlient['idKlienta'])+')')
+
+
+def wyszukajKlientaId():
+    idKlienta = int(input('Podaj id klienta: '))
+    for i in range(len(bazaKlienci)):
+        if bazaKlienci[i]['idKlienta']==idKlienta:
+            klient=bazaKlienci[i]
+            tak=True
+            break
+        else:
+            tak=False
+    if tak==True:
+        print(klient)
+    else:
+        print('Brak klienta w bazie.')
 
 
 #  MAGAZYN
@@ -267,6 +283,7 @@ while tak == True:
     print('   21 - dodaj klienta')
     print('   22 - usuń klienta')
     print('   23 - modyfikuj klienta')
+    print('   24 - wyszukaj po id')
     print('3 - Magazyn (stan)')
     print('   31 - dodaj do magazynu')
     print('   32 - usuń z magazynu')
@@ -286,6 +303,8 @@ while tak == True:
         usunKlienta()
     if wybor == 23:
         modyfikujKlienta()
+    if wybor == 24:
+        wyszukajKlientaId()
     if wybor == 31:
         dodajDoMagazynu()
     if wybor == 32:
