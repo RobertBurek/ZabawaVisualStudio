@@ -1,4 +1,5 @@
 import subprocess
+import datetime
 
 bazaTowary = []
 bazaMagazyn = []
@@ -15,14 +16,15 @@ def dodajTr(bazaTr, transakcja):
         bazaTr.append(transakcja)
 
 
-dodajTr(bazaTransakcji, {'id': 1, 'idKlienta': 25100, 'data': '19-06-2019',
-               'towar': 'koszulka', 'cena': 25.5, 'ile': 4, 'status': 'zrealizowane'})
-dodajTr(bazaTransakcji, {'id': 2, 'idKlienta': 25111, 'data': '16-06-2019',
-               'towar': 'spodnie', 'cena': 100.0, 'ile': 3, 'status': 'zrealizowane'})
-dodajTr(bazaTransakcji, {'id': 3, 'idKlienta': 25100, 'data': '04-03-2019',
-               'towar': 'spodnie', 'cena': 100.0, 'ile': 2, 'status': 'zrealizowane'})
-dodajTr(bazaTransakcji, {'id': 4, 'idKlienta': 25111, 'data': '10-05-2019',
-               'towar': 'koszulka', 'cena': 25.5, 'ile': 1, 'status': 'zrealizowane'})
+dodajTr(bazaTransakcji, {'id': 1, 'idKlienta': 25100, 'data': '24.06.2019 22:16:43',
+                         'towar': 'koszulka', 'cena': 25.5, 'ile': 4, 'status': 'zrealizowane'})
+dodajTr(bazaTransakcji, {'id': 2, 'idKlienta': 25111, 'data': '25.06.2019 21:17:23',
+                         'towar': 'spodnie', 'cena': 100.0, 'ile': 3, 'status': 'zrealizowane'})
+dodajTr(bazaTransakcji, {'id': 3, 'idKlienta': 25100, 'data': '26.06.2019 13:23:45',
+                         'towar': 'spodnie', 'cena': 100.0, 'ile': 2, 'status': 'zrealizowane'})
+dodajTr(bazaTransakcji, {'id': 4, 'idKlienta': 25111, 'data': '27.06.2019 12:12:12',
+                         'towar': 'koszulka', 'cena': 25.5, 'ile': 1, 'status': 'zrealizowane'})
+
 
 def dodajK(bazaK, klient):
     if klient in bazaK:
@@ -144,13 +146,13 @@ def modyfikujKlienta():
 def wyszukajKlientaId():
     idKlienta = int(input('Podaj id klienta: '))
     for i in range(len(bazaKlienci)):
-        if bazaKlienci[i]['idKlienta']==idKlienta:
-            klient=bazaKlienci[i]
-            tak=True
+        if bazaKlienci[i]['idKlienta'] == idKlienta:
+            klient = bazaKlienci[i]
+            tak = True
             break
         else:
-            tak=False
-    if tak==True:
+            tak = False
+    if tak == True:
         print(klient)
     else:
         print('Brak klienta w bazie o takim id.')
@@ -199,75 +201,81 @@ def usunZMagazynu():
 def dodajTransakcje():
     idKlienta = int(input('Podaj id klienta: '))
     for i in range(len(bazaKlienci)):
-        if bazaKlienci[i]['idKlienta']==idKlienta:
-            klient=bazaKlienci[i]
+        if bazaKlienci[i]['idKlienta'] == idKlienta:
+            klient = bazaKlienci[i]
             print(klient)
-            jestKlient=True
+            jestKlient = True
             break
         else:
-            jestKlient=False
-    if jestKlient==False:
+            jestKlient = False
+    if jestKlient == False:
         print('Nie ma klienta o takim id.')
         imieNazwisko = str(input('Podaj imie i nazwisko: '))
         for j in range(len(bazaKlienci)):
-            if bazaKlienci[j]['imieNazwisko']==imieNazwisko:
-                klient=bazaKlienci[j]
-                jestKlient=True
+            if bazaKlienci[j]['imieNazwisko'] == imieNazwisko:
+                klient = bazaKlienci[j]
+                jestKlient = True
                 break
             else:
-                jestKlient=False
-    if jestKlient==False:
+                jestKlient = False
+    if jestKlient == False:
         print('Nie ma klienta o takim danych.')
         print('Wyszukaj klienta na liście - opcja (2).')
     else:
-        takNie = str(input('Dotyczy klienta: '+klient['imieNazwisko']+' ('+str(klient['idKlienta'])+')? Y/N: '))
+        takNie = str(input('Dotyczy klienta: ' +
+                           klient['imieNazwisko']+' ('+str(klient['idKlienta'])+')? Y/N: '))
         if takNie == 'Y' or takNie == 'y':
-            tak=True
-            while tak==True:
+            tak = True
+            while tak == True:
                 nazwa = str(input('Nazwa towaru: '))
                 cena = float(input('Cena towaru: '))
-                stanMagazynu=-1
+                stanMagazynu = -1
                 for index in range(len(bazaMagazyn)):
-                    if bazaMagazyn[index]['nazwa']==nazwa+'_'+str(cena):
-                        stanMagazynu=bazaMagazyn[index]['ilosc']
-                        tak=False
+                    if bazaMagazyn[index]['nazwa'] == nazwa+'_'+str(cena):
+                        stanMagazynu = bazaMagazyn[index]['ilosc']
+                        tak = False
                         break
-                if stanMagazynu==-1:
-                        print('Nie ma takiego towaru w sprzedaży.')
-                        takNie = str(input('Chcesz spróbować jeszcze raz? Y/N: '))
-                        if takNie == 'Y' or takNie == 'y':
-                            tak=True
-                        else:
-                            tak=False
+                if stanMagazynu == -1:
+                    print('Nie ma takiego towaru w sprzedaży.')
+                    takNie = str(input('Chcesz spróbować jeszcze raz? Y/N: '))
+                    if takNie == 'Y' or takNie == 'y':
+                        tak = True
+                    else:
+                        tak = False
             ile = int(input('Ile sztuk: '))
-            if stanMagazynu<ile:
+            if stanMagazynu < ile:
                 print('Niewystarczająca ilość w magazynie.')
                 print('Status: "czeka na dostawę"')
-                status='czeka na dostawę'
-            if stanMagazynu>=ile:
-                status='zrealizowane'
-                stanMagazynu-=ile
-                bazaMagazyn[index]['ilosc']=stanMagazynu
-            data = str(input('Data transakcji DD-MM-RRRR: '))
+                status = 'czeka na dostawę'
+            if stanMagazynu >= ile:
+                status = 'zrealizowane'
+                stanMagazynu -= ile
+                bazaMagazyn[index]['ilosc'] = stanMagazynu
+ #           dataCzas = str(input('Data transakcji DD-MM-RRRR: '))
+            dataCzas = str(
+                datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S"))
             id = bazaTransakcji[len(bazaTransakcji)-1]['id']+1
-            transakcja={'id': id, 'idKlienta': klient['idKlienta'], 'data': data,
-               'towar': nazwa, 'cena': cena, 'ile': ile, 'status': status}
-            dodajTr(bazaTransakcji,transakcja)
+            transakcja = {'id': id, 'idKlienta': klient['idKlienta'], 'data': dataCzas,
+                          'towar': nazwa, 'cena': cena, 'ile': ile, 'status': status}
+            dodajTr(bazaTransakcji, transakcja)
             print('Dodano transakcję nr='+str(id)+' ze statusem ('+status+')')
-           
 
 
 def transakcjeKlienta():
     idKlienta = int(input('Podaj id klienta: '))
     for i in range(len(bazaTransakcji)):
-        if bazaTransakcji[i]['idKlienta']==idKlienta:
+        if bazaTransakcji[i]['idKlienta'] == idKlienta:
             print(bazaTransakcji[i])
 
 
 def transakcjeKlientaId(id):
+    licznik = 0
     for i in range(len(bazaTransakcji)):
-        if bazaTransakcji[i]['idKlienta']==id:
+        if bazaTransakcji[i]['idKlienta'] == id:
             print(bazaTransakcji[i])
+            licznik += 1
+    if licznik == 0:
+        print('Nie ma klienta lub klient nie ma transakcji.')
 
 
 def usunTransakcje():
@@ -275,30 +283,30 @@ def usunTransakcje():
     transakcjeKlientaId(idKlienta)
     idTransakcji = int(input('Podaj id transakcji: '))
     for index in range(len(bazaTransakcji)):
-        if bazaTransakcji[index]['id']==idTransakcji:
+        if bazaTransakcji[index]['id'] == idTransakcji:
             print('Transakcja przed zmianą:')
             print(bazaTransakcji[index])
-            jestTransakcja=True
+            jestTransakcja = True
             break
         else:
-            jestTransakcja=False
-    if jestTransakcja==False:
+            jestTransakcja = False
+    if jestTransakcja == False:
         print('Nie ma transakcji o takim id.')
     else:
         takNie = str(input('Czy jesteś pewien? Y/N: '))
         if takNie == 'Y' or takNie == 'y':
             for i in range(len(bazaMagazyn)):
-                if bazaMagazyn[i]['nazwa']==bazaTransakcji[index]['towar']+'_'+str(bazaTransakcji[index]['cena']):
-                    print('Stan magazynowy przed zmianą: '+str(bazaMagazyn[i]['ilosc']))
-                    bazaMagazyn[i]['ilosc']+=bazaTransakcji[index]['ile']
+                if bazaMagazyn[i]['nazwa'] == bazaTransakcji[index]['towar']+'_'+str(bazaTransakcji[index]['cena']):
+                    print('Stan magazynowy przed zmianą: ' +
+                          str(bazaMagazyn[i]['ilosc']))
+                    bazaMagazyn[i]['ilosc'] += bazaTransakcji[index]['ile']
                 break
-            status='reklamacja '+str(bazaTransakcji[index]['ile'])+' szt.'
-            bazaTransakcji[index]['ile']=0
-            bazaTransakcji[index]['status']=status
+            status = 'reklamacja '+str(bazaTransakcji[index]['ile'])+' szt.'
+            bazaTransakcji[index]['ile'] = 0
+            bazaTransakcji[index]['status'] = status
             print('Transakcja po zmianie:')
             print(bazaTransakcji[index])
             print('Stan magazynowy po zmianą: '+str(bazaMagazyn[i]['ilosc']))
-           
 
 
 def wypiszBaze(baza):
