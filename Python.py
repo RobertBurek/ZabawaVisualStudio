@@ -17,9 +17,12 @@ def dodajTr(bazaTr, transakcja):
 
 dodajTr(bazaTransakcji, {'id': 1, 'idKlienta': 25100, 'data': '19-06-2019',
                'towar': 'koszulka', 'cena': 25.5, 'ile': 4, 'status': 'zrealizowane'})
-dodajTr(bazaTransakcji, {'id': 2, 'idKlienta': 25100, 'data': '16-06-2019',
+dodajTr(bazaTransakcji, {'id': 2, 'idKlienta': 25111, 'data': '16-06-2019',
                'towar': 'spodnie', 'cena': 100.0, 'ile': 3, 'status': 'zrealizowane'})
-
+dodajTr(bazaTransakcji, {'id': 3, 'idKlienta': 25100, 'data': '04-03-2019',
+               'towar': 'spodnie', 'cena': 100.0, 'ile': 2, 'status': 'zrealizowane'})
+dodajTr(bazaTransakcji, {'id': 4, 'idKlienta': 25111, 'data': '10-05-2019',
+               'towar': 'koszulka', 'cena': 25.5, 'ile': 1, 'status': 'zrealizowane'})
 
 def dodajK(bazaK, klient):
     if klient in bazaK:
@@ -150,7 +153,7 @@ def wyszukajKlientaId():
     if tak==True:
         print(klient)
     else:
-        print('Brak klienta w bazie.')
+        print('Brak klienta w bazie o takim id.')
 
 
 #  MAGAZYN
@@ -254,6 +257,13 @@ def dodajTransakcje():
            
 
 
+def transakcjeKlienta():
+    idKlienta = int(input('Podaj id klienta: '))
+    for i in range(len(bazaTransakcji)):
+        if bazaTransakcji[i]['idKlienta']==idKlienta:
+            print(bazaTransakcji[i])
+
+
 def wypiszBaze(baza):
     print('-----------------------------------------------')
     for i in range(len(baza)):
@@ -290,6 +300,7 @@ while tak == True:
     print('4 - Transakcje (lista)')
     print('   41 - dodaj transakcje')
     print('   42 - usuń transakcje')
+    print('   43 - transakcje klienta')
     print('9 - Raporty (wszystkie)')
     print('0 - Koniec')
     wybor = int(input('Twój wybór: '))
@@ -311,6 +322,8 @@ while tak == True:
         usunZMagazynu()
     if wybor == 41:
         dodajTransakcje()
+    if wybor == 43:
+        transakcjeKlienta()
     if wybor == 9:
         raporty()
     if wybor == 1:
