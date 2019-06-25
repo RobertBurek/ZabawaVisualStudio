@@ -264,6 +264,43 @@ def transakcjeKlienta():
             print(bazaTransakcji[i])
 
 
+def transakcjeKlientaId(id):
+    for i in range(len(bazaTransakcji)):
+        if bazaTransakcji[i]['idKlienta']==id:
+            print(bazaTransakcji[i])
+
+
+def usunTransakcje():
+    idKlienta = int(input('Podaj id klienta: '))
+    transakcjeKlientaId(idKlienta)
+    idTransakcji = int(input('Podaj id transakcji: '))
+    for index in range(len(bazaTransakcji)):
+        if bazaTransakcji[index]['id']==idTransakcji:
+            print('Transakcja przed zmianą:')
+            print(bazaTransakcji[index])
+            jestTransakcja=True
+            break
+        else:
+            jestTransakcja=False
+    if jestTransakcja==False:
+        print('Nie ma transakcji o takim id.')
+    else:
+        takNie = str(input('Czy jesteś pewien? Y/N: '))
+        if takNie == 'Y' or takNie == 'y':
+            for i in range(len(bazaMagazyn)):
+                if bazaMagazyn[i]['nazwa']==bazaTransakcji[index]['towar']+'_'+str(bazaTransakcji[index]['cena']):
+                    print('Stan magazynowy przed zmianą: '+str(bazaMagazyn[i]['ilosc']))
+                    bazaMagazyn[i]['ilosc']+=bazaTransakcji[index]['ile']
+                break
+            status='reklamacja '+str(bazaTransakcji[index]['ile'])+' szt.'
+            bazaTransakcji[index]['ile']=0
+            bazaTransakcji[index]['status']=status
+            print('Transakcja po zmianie:')
+            print(bazaTransakcji[index])
+            print('Stan magazynowy po zmianą: '+str(bazaMagazyn[i]['ilosc']))
+           
+
+
 def wypiszBaze(baza):
     print('-----------------------------------------------')
     for i in range(len(baza)):
@@ -322,6 +359,8 @@ while tak == True:
         usunZMagazynu()
     if wybor == 41:
         dodajTransakcje()
+    if wybor == 42:
+        usunTransakcje()
     if wybor == 43:
         transakcjeKlienta()
     if wybor == 9:
