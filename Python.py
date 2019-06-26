@@ -312,7 +312,7 @@ def usunTransakcje():
 def wypiszBaze(baza):
     print('-----------------------------------------------')
     for i in range(len(baza)):
-        print(baza[i])
+        print(str(i+1)+') '+str(baza[i]))
     print('-----------------------------------------------')
 
 
